@@ -71,8 +71,8 @@ Get-AzImage `
     -ResourceGroupName $rg.ResourceGroupName
 
 #Create user object, this will be used for the Windows username/password
-$password = ConvertTo-SecureString 'Winter2019))' -AsPlainText -Force
-$WindowsCred = New-Object System.Management.Automation.PSCredential ('emathur', $password)
+# Credentials are prompted securely at runtime — never hardcode passwords in scripts.
+$WindowsCred = Get-Credential -Message 'Enter the VM administrator credentials'
 
 #Let's create a VM from our new image, we'll use a more terse definition for this VM creation
 New-AzVm `

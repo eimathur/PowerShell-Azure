@@ -4,8 +4,8 @@
     #vnet 172.16.0.0/16 subnet 172.16.1.0/24
 
 #Create PSCredential object, this will be used for the Windows username/password
-$password = ConvertTo-SecureString 'Summer2000!@' -AsPlainText -Force
-$WindowsCred = New-Object System.Management.Automation.PSCredential ('emathur', $password)
+# Credentials are prompted securely at runtime — never hardcode passwords in scripts.
+$WindowsCred = Get-Credential -Message 'Enter the VM administrator credentials'
 
 
 
@@ -19,6 +19,7 @@ $WindowsCred = New-Object System.Management.Automation.PSCredential ('emathur', 
 #D2s_v3 EastUS, vCPUs: 2, Ram: 8, MaxIOPS: 3200, Storage: 16GB, Cost/month: $70
 #'Standard_B1ls' , 1vCPU,0.5GB Ram, $3.80
 #==============
+
 # There are no parameters for DiskName and NetworkInterface - they will be auto-generated 
 
 $vmParams = @{
@@ -46,4 +47,3 @@ Get-AzPublicIpAddress `
 Remove-AzResourceGroup `
     -Name 'rg-Demo' `
     -Force
-
